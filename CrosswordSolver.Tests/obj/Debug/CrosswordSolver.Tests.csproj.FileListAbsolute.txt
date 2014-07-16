@@ -1,8 +1,0 @@
-c:\users\chris_000\documents\visual studio 2012\Projects\CrosswordSolver\CrosswordSolver.Tests\obj\Debug\CrosswordSolver.Tests.csprojResolveAssemblyReference.cache
-c:\users\chris_000\documents\visual studio 2012\Projects\CrosswordSolver\CrosswordSolver.Tests\bin\Debug\CrosswordSolver.Tests.dll
-c:\users\chris_000\documents\visual studio 2012\Projects\CrosswordSolver\CrosswordSolver.Tests\bin\Debug\CrosswordSolver.Tests.pdb
-c:\users\chris_000\documents\visual studio 2012\Projects\CrosswordSolver\CrosswordSolver.Tests\bin\Debug\CrosswordSolver.dll
-c:\users\chris_000\documents\visual studio 2012\Projects\CrosswordSolver\CrosswordSolver.Tests\bin\Debug\CrosswordSolver.pdb
-c:\users\chris_000\documents\visual studio 2012\Projects\CrosswordSolver\CrosswordSolver.Tests\obj\Debug\CrosswordSolver.Tests.dll
-c:\users\chris_000\documents\visual studio 2012\Projects\CrosswordSolver\CrosswordSolver.Tests\obj\Debug\CrosswordSolver.Tests.pdb
-c:\users\chris_000\documents\visual studio 2012\Projects\CrosswordSolver\CrosswordSolver.Tests\bin\Debug\swedish-word-list
