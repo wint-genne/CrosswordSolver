@@ -27,7 +27,7 @@ namespace CrosswordSolver.Tests
             var solver = new Solver(GenerateWords(1000000));
             var time = new Stopwatch();
             time.Start();
-            var num = solver.FindSolutions(new Pattern("     "), TODO).Count();
+            var num = solver.FindSolutions(new Pattern("     "), null).Count();
             Debug.WriteLine(time.ElapsedMilliseconds);
         }
 
@@ -41,7 +41,7 @@ namespace CrosswordSolver.Tests
 
         private static void TestSolver(Solver solver, string pattern, params string[] matchingWords)
         {
-            var solutions = solver.FindSolutions(new Pattern(pattern), TODO).ToArray();
+            var solutions = solver.FindSolutions(new Pattern(pattern), null).ToArray();
             Assert.AreEqual(matchingWords.Length, solutions.Length);
             for (var i = 0; i < matchingWords.Length; i++)
             {
