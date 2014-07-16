@@ -1,0 +1,6 @@
+c:\users\chris_000\documents\visual studio 2012\Projects\CrosswordSolver\CrosswordSolver\bin\Release\swedish-word-list
+c:\users\chris_000\documents\visual studio 2012\Projects\CrosswordSolver\CrosswordSolver\bin\Release\CrosswordSolver.dll
+c:\users\chris_000\documents\visual studio 2012\Projects\CrosswordSolver\CrosswordSolver\bin\Release\CrosswordSolver.pdb
+c:\users\chris_000\documents\visual studio 2012\Projects\CrosswordSolver\CrosswordSolver\obj\Release\CrosswordSolver.csprojResolveAssemblyReference.cache
+c:\users\chris_000\documents\visual studio 2012\Projects\CrosswordSolver\CrosswordSolver\obj\Release\CrosswordSolver.dll
+c:\users\chris_000\documents\visual studio 2012\Projects\CrosswordSolver\CrosswordSolver\obj\Release\CrosswordSolver.pdb
