@@ -1,4 +1,8 @@
-﻿window.todoApp.todoListViewModel = (function (ko, datacontext) {
+﻿var Pattern = function () {
+    this.pattern = ko.observable("");
+};
+
+window.todoApp.todoListViewModel = (function (ko, datacontext) {
     function readPreviousPatterns() {
         var patternsString = (localStorage.previousPatterns || "");
         return patternsString != "" ? patternsString.split(",") : [];
@@ -42,7 +46,7 @@
         })),
         numLetters = ko.observable(1),
         previousPatterns = ko.observableArray(readPreviousPatterns());
-    var pattern = ko.observable("");
+    var patterns = ko.observable(new Pattern());
     var searched = ko.observable(false);
     var hasMore = ko.observable(false);
     var loadMore = function () {

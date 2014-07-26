@@ -17,20 +17,22 @@
     <div>
         <form data-bind="submit: search">
             <input id="antiForgeryToken" type="hidden" value="@GetAntiForgeryToken()" />
-            <div class="form-group">
-                <label>Antal bokstäver</label>
-                <div data-bind="foreach: shortcuts" class="btn-group-sm"><a href="#" data-bind="click: select, text: num, css: { active: $root.numLetters() == num }" class="btn btn-default"></a></div>
-            </div>
+            <div data-bind="foreach: patterns">
+                
+                <div class="form-group">
+                    <label>Antal bokstäver</label>
+                    <div data-bind="foreach: $parent.shortcuts" class="btn-group-sm"><a href="#" data-bind="click: function () { $parent.numLetters($data) }, text: $data, css: { active: $parent.numLetters() == $data }" class="btn btn-default"></a></div>
+                </div>
 
-            <div class="form-group">
-                <label>Kända bokstäver</label>
-                <div class="patternInputWrapper">
-                    <a href="#" class="glyphicon glyphicon-remove-circle clearPattern" data-bind="click: clearPattern" title="Rensa"></a>
-                    <input data-bind="value: pattern, numLetterMask: numLetters()" class="form-control" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+                <div class="form-group">
+                    <label>Kända bokstäver</label>
+                    <div class="patternInputWrapper">
+                        <a href="#" class="glyphicon glyphicon-remove-circle clearPattern" data-bind="click: clearPattern" title="Rensa"></a>
+                        <input data-bind="value: pattern, numLetterMask: numLetters()" class="form-control" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+                    </div>
                 </div>
             </div>
-            
-                <button class="btn btn-primary">Sök ord!</button>
+            <button class="btn btn-primary">Sök ord!</button>
         </form>
 
     </div>
@@ -46,7 +48,7 @@
             </p>
         </div>
     </div>
-    <div data-bind="whenVisible: loadMore, visible: hasMore"></div>
+    <div data-bind="whenVisible: function () { loadMore(); }, visible: hasMore"></div>
 </div>
 <div data-bind="if: matches().length == 0 && searched()" class="no-result">
     Hittade inga ord :(
@@ -63,5 +65,5 @@
 @section scripts {
     @Scripts.Render("~/bundles/knockout")
     @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/todo")
+    @Scripts.Render("~/bundles/app")
 }
