@@ -23,6 +23,9 @@ namespace CrowsswordSolver.Mvc
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+
+            ValueProviderFactories.Factories.Remove(ValueProviderFactories.Factories.OfType<JsonValueProviderFactory>().Single());
+            ValueProviderFactories.Factories.Add(new CustomJsonValueProviderFactory());
         }
     }
 }

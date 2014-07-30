@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Serialization;
 using System.Text.RegularExpressions;
 using jQueryApi;
 
@@ -10,10 +11,23 @@ namespace CrosswordSolver.Script
     {
         public const char PatternAnyChar = '◻';
 
-        private static string CreatePattern(string pattern)
+        private static PatternRequest CreatePattern(PatternViewModel[] patterns)
         {
-            var oldText = new Regex(PatternAnyChar.ToString());
-            return pattern.Replace(oldText, "?");
+            var anyCharRegexp = new Regex(PatternAnyChar.ToString(), "g");
+            var request = new PatternRequest();
+            var otherPatterns = new List<OtherPattern>();
+            foreach (var pattern in patterns)
+            {
+                otherPatterns.Add(new OtherPattern
+                {
+                    Pattern = pattern.Pattern.Value.Replace(anyCharRegexp, "?"),
+                    DX = pattern.DX.Value,
+                    DY = pattern.DY.Value,
+                    Direction = pattern.Direction.Value
+                });
+            }
+            request.OtherPatterns = otherPatterns.ToArray();
+            return request;
         }
 
         public static jQueryXmlHttpRequest Search(ListViewModel viewModel, bool reset)
@@ -43,8 +57,8 @@ namespace CrosswordSolver.Script
             {
                 searchAfterWord = viewModel.Matches.Value.Last().Word;
             }
-            return AjaxRequest("get", SolveUrl(),
-                               new JsDictionary<string, object>("pattern", CreatePattern(viewModel.Patterns.Value[0].Pattern.Value),
+            return AjaxRequest("POST", SolveUrl(), 
+                               new JsDictionary<string, object>("pattern", CreatePattern(viewModel.Patterns.Value),
                                                                 "searchAfterWord", searchAfterWord))
                 .Done(getSucceeded)
                 .Fail(getFailed);
@@ -60,7 +74,7 @@ namespace CrosswordSolver.Script
                 ContentType = "application/json",
                 Cache = false,
                 Type = type,
-                Data = data
+                Data = Json.Stringify(data)
             };
             var antiForgeryToken = jQuery.Select("#antiForgeryToken").GetValue();
             if (antiForgeryToken != null)
@@ -75,7 +89,7 @@ namespace CrosswordSolver.Script
         // routes
         private static string SolveUrl()
         {
-            return "/api/solve";
+            return "/solve/post";
         }
     }
 }

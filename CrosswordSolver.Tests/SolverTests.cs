@@ -27,7 +27,7 @@ namespace CrosswordSolver.Tests
             var solver = new Solver(GenerateWords(1000000));
             var time = new Stopwatch();
             time.Start();
-            var num = solver.FindSolutions(new Pattern("     "), null).Count();
+            var num = solver.FindSolutions(new PatternRequest{ OtherPatterns = new[]{ new OtherPattern{ Pattern = "     " }}}, null).Count();
             Debug.WriteLine(time.ElapsedMilliseconds);
         }
 
@@ -41,7 +41,7 @@ namespace CrosswordSolver.Tests
 
         private static void TestSolver(Solver solver, string pattern, params string[] matchingWords)
         {
-            var solutions = solver.FindSolutions(new Pattern(pattern), null).ToArray();
+            var solutions = solver.FindSolutions(new PatternRequest{ OtherPatterns = new[]{ new OtherPattern{ Pattern = pattern.Replace(" ", "?") }}}, null).ToArray();
             Assert.AreEqual(matchingWords.Length, solutions.Length);
             for (var i = 0; i < matchingWords.Length; i++)
             {
@@ -54,6 +54,32 @@ namespace CrosswordSolver.Tests
         {
             Assert.IsFalse(new Regex("^$").IsMatch("hej"));
             Assert.IsTrue(new Regex(@"^\w\w\w$").IsMatch("hej"));
+        }
+
+        [TestMethod]
+        public void TestMultiplePatterns()
+        {
+            PatternRequest pattern = new PatternRequest
+            {
+                OtherPatterns = new[]
+                {
+                    new OtherPattern
+                    {
+                        Pattern = "?e?",
+                        Direction = Direction.Right
+                    },
+                    new OtherPattern
+                    {
+                        Pattern = "???",
+                        Direction = Direction.Down,
+                        DY = -2,
+                        DX = 0
+                    }
+                }
+            };
+            var solutions = new Solver(new[] {"hej", "nej", "nah"}).FindSolutions(pattern).ToArray();
+            Assert.AreEqual(1, solutions.Count());
+            Assert.AreEqual("hej", solutions.Single());
         }
     }
 }

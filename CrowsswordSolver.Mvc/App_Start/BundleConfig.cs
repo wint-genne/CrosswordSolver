@@ -24,6 +24,9 @@ namespace CrowsswordSolver.Mvc
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
                         "~/Scripts/knockout-{version}.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+                        "~/Scripts/bootstrap.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
                 "~/Scripts/mscorlib.js",
                 "~/Scripts/linq.js",

@@ -17,22 +17,56 @@
     <div>
         <form data-bind="submit: search">
             <input id="antiForgeryToken" type="hidden" value="@GetAntiForgeryToken()" />
-            <div data-bind="foreach: patterns">
-                
-                <div class="form-group">
-                    <label>Antal bokstäver</label>
-                    <div data-bind="foreach: $parent.shortcuts" class="btn-group-sm"><a href="#" data-bind="click: function () { $parent.numLetters($data) }, text: $data, css: { active: $parent.numLetters() == $data }" class="btn btn-default"></a></div>
-                </div>
+                <div>
+                    <div data-bind="foreach: patterns" class="panel-group" id="accordion" style="margin-bottom: 20px;">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-bind="attr: { href: '#collapse' + $index() }">
+                                        Ord <span data-bind="text: $index() + 1"></span>: <span data-bind="text: pattern"></span>
+                                        <a href="#" class="close" data-bind="visible: $parent.patterns().length > 1, click: function () { $parent.patterns.remove($data); }">&times;</a>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div data-bind="attr: { id: 'collapse' + $index() }, collapseShow: $index() > 0, css: { in: $index() == 0 }" class="panel-collapse collapse" data-parent="#accordion">
+                                <div class="panel-body">
+                                    <div class="form-group" data-bind="visible: $parent.patterns().length > 1">
+                                        <label>Var finns ordet?</label>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                Kolumn <input data-bind="value: DX" class="form-control" type="number"/> 
+                                            </div>
+                                            <div class="col-sm-4">
+                                                Rad <input data-bind="value: DY" class="form-control" type="number"/> 
+                                            </div>
+                                            <div class="col-sm-4">
+                                                Riktning <select data-bind="value: direction" class="form-control">
+                                                             <option value="0">Höger</option>
+                                                             <option value="1">Ner</option>
+                                                         </select>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                <div class="form-group">
-                    <label>Kända bokstäver</label>
-                    <div class="patternInputWrapper">
-                        <a href="#" class="glyphicon glyphicon-remove-circle clearPattern" data-bind="click: clearPattern" title="Rensa"></a>
-                        <input data-bind="value: pattern, numLetterMask: numLetters()" class="form-control" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+                                    <div class="form-group">
+                                        <label>Antal bokstäver</label>
+                                        <div data-bind="foreach: $parent.shortcuts" class="btn-group-sm"><a href="#" data-bind="    click: function () { $parent.numLetters($data) }, text: $data, css: { active: $parent.numLetters() == $data }" class="btn btn-default"></a></div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Kända bokstäver</label>
+                                        <div class="patternInputWrapper">
+                                            <a href="#" class="glyphicon glyphicon-remove-circle clearPattern" data-bind="click: clearPattern" title="Rensa"></a>
+                                            <input data-bind="value: pattern, numLetterMask: numLetters()" class="form-control" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
             </div>
-            <button class="btn btn-primary">Sök ord!</button>
+            <button class="btn btn-primary">Sök ord!</button> 
+            <a class="btn btn-default" data-bind="click: function () { addPattern(); }"><i class="glyphicon glyphicon-plus"></i></a>
         </form>
 
     </div>
@@ -48,9 +82,9 @@
             </p>
         </div>
     </div>
-    <div data-bind="whenVisible: function () { loadMore(); }, visible: hasMore"></div>
+    <div data-bind="whenVisible: function () { loadMore(); }, visible: hasMore" class="loading-more">Letar efter mer ord...</div>
 </div>
-<div data-bind="if: matches().length == 0 && searched()" class="no-result">
+<div data-bind="if: matches().length == 0 && hasSearched()" class="no-result">
     Hittade inga ord :(
     <br/><small>Korsordshjalp.nu innehåller de flesta vanliga Svenska ord, men många korsord är luriga och har lösningar som kanske inte riktigt följer Svenska språket. Du får improvisera!</small>
 </div>
@@ -65,5 +99,6 @@
 @section scripts {
     @Scripts.Render("~/bundles/knockout")
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/app")
 }

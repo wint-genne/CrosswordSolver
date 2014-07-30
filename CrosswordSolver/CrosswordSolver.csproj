@@ -39,8 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LiveSolver.cs" />
     <Compile Include="Pattern.cs" />
+    <Compile Include="PatternRequest.cs" />
+    <Compile Include="PreparedPatternRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Solution.cs" />
     <Compile Include="Solver.cs" />
   </ItemGroup>
   <ItemGroup>

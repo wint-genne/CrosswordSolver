@@ -9,6 +9,10 @@ namespace CrosswordSolver.Script
 {
     public class ListViewModel
     {
+        public Observable<string> Error = Knockout.Observable<string>();
+        public ObservableArray<MatchViewModel> Matches = Knockout.ObservableArray<MatchViewModel>();
+        public Observable<bool> HasSearched = Knockout.Observable(false);
+
         private static string[] ReadPreviousPatterns()
         {
             var patternsString = (Window.LocalStorage.GetItem("previousPatterns") ?? "");
@@ -28,9 +32,6 @@ namespace CrosswordSolver.Script
             Window.LocalStorage.SetItem("previousPatterns", string.Join(",", patterns));
         }
 
-        public Observable<string> Error = Knockout.Observable<string>();
-        public ObservableArray<MatchViewModel> Matches = Knockout.ObservableArray<MatchViewModel>();
-
         public void Search()
         {
             AddToPreviousPattern();
@@ -38,6 +39,7 @@ namespace CrosswordSolver.Script
             {
                 Searched.Value = true;
                 Searched.Value = false;
+                HasSearched.Value = true;
             };
 
             Action addFailed = () => {
@@ -62,6 +64,11 @@ namespace CrosswordSolver.Script
             HasMore.Value = false;
             DataContext.Search(this, false)
                        .Fail(() => Error.Value = "Något gick fel...");
+        }
+
+        public void AddPattern()
+        {
+            Patterns.Push(new PatternViewModel());
         }
     }
 }

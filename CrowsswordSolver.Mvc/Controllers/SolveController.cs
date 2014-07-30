@@ -4,17 +4,17 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Mvc;
 using CrosswordSolver;
 
 namespace CrowsswordSolver.Mvc.Controllers
 {
-    public class SolveController : ApiController
+    public class SolveController : Controller
     {
-        // GET api/solve
-        public IEnumerable<string> Get(string pattern, string searchAfterWord = null)
+        // POST api/solve
+        public ActionResult Post(PatternRequest pattern, string searchAfterWord = null)
         {
-            return LiveSolver.Solver.FindSolutions(new Pattern(pattern), searchAfterWord).Take(10);
+            return Json(LiveSolver.Solver.FindSolutions(pattern, searchAfterWord).Take(10).ToArray());
         }
-
     }
 }

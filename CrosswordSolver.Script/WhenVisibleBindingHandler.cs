@@ -12,7 +12,7 @@ namespace CrosswordSolver.Script
         {
             jQuery.Window.Scroll(@event =>
             {
-                if (IsScrolledIntoView(element))
+                if (jQuery.FromElement(element).Is(":visible") && IsScrolledIntoView(element))
                 {
                     ((Action) valueAccessor())();
                 }

@@ -114,3 +114,8 @@ font-size: large;
 .previousPatterns a:hover {
     color: gray;
 }
+
+.loading-more {
+    text-align: center;
+    color: gray;
+}
